@@ -41,6 +41,13 @@ var h4Tag = document.getElementById("h4");
 
 const weekNames = ["Sunday", "Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
+inputText.addEventListener('keypress',function (event){
+    if (event.key === "Enter") {
+        btn.click();
+    }
+});
+
+
 btn.addEventListener("click", ApiInfo);
 function getCoordintes() {
 
@@ -108,6 +115,7 @@ function ApiInfo() {
         if (request.status == 200) {
             const response = request.response[0];
             if(response != null){
+                cName.innerHTML = response.state;
                 CurrentWeatherInfo(response.lat,response.lon);
                 h4Tag.classList.remove('hidden');
                 h1Tag.classList.remove('hidden');
@@ -140,8 +148,6 @@ function CurrentWeatherInfo(myLat,myLon){
     myrequest.onload = function (){
         if(myrequest.status === 200){
             const myResponce = myrequest.response;
-            if(inputText.value.length != 0 )
-                cName.innerHTML = inputText.value;
             temperatureConverterCelc(myResponce.main.temp,degreeText);
             mainImg.src = `Images/Weathers/${myResponce.weather[0].icon}.png`;
             writeAirCond(myResponce.main.feels_like,myResponce.wind.speed,myResponce.clouds.all);
